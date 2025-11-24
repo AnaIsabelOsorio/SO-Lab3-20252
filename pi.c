@@ -21,9 +21,15 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-
+#include <sys/time.h>   // <-- añadido para medir tiempo
 
 double CalcPi(int n);
+
+double GetTime() {
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return (double)tv.tv_sec + (double)tv.tv_usec / 1e6;
+}
 
 int main(int argc, char **argv)
 {
@@ -43,27 +49,27 @@ int main(int argc, char **argv)
         return 1;
     }
     
-    // get initial time 
+    // tiempo inicial
+    fTimeStart = GetTime();
 
-    /* the calculation is done here*/
+    // cálculo
     fPi = CalcPi(n);
 
-    //get final fime
+    // tiempo final
+    fTimeEnd = GetTime();
     
     printf("\npi is approximately = %.20f \nError               = %.20f\n",
            fPi, fabs(fPi - fPi25DT));
     
-    // report time
+    printf("Tiempo (serial)     = %.6f segundos\n", fTimeEnd - fTimeStart);
 
     return 0;
 }
-
 
 double f(double a)
 {
     return (4.0 / (1.0 + a*a));
 }
-
 
 double CalcPi(int n)
 {
