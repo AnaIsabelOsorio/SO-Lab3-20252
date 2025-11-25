@@ -27,11 +27,11 @@
 double CalcPi(int n, int T);
 double f(double a);
 
-// estructura para los argumentos de cada hilo
+// estructura de cada hilo
 typedef struct {
     int start;
     int end;
-    double h;
+    double h; //Tamaño del intervalo
 } thread_args_t;
 
 double GetTime() {
@@ -50,6 +50,7 @@ void* thread_func(void* arg) {
     double local_sum = 0.0;
     double x;
 
+    // cadaa hilo recorre su parte del intervalo
     for (int i = start; i < end; i++) {
         x = h * ((double)i + 0.5);
         local_sum += f(x);
